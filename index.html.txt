@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOUR PRINCE'S CORNER — SOMEWHERE IN NORTHERN ITALY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --soft-yellow: #fef08a;
+            --warm-sun: #fde047;
+            --soft-blue: #bae6fd;
+            --sky-blue: #38bdf8;
+            --text-dark: #1e293b;
+            --text-light: #f8fafc;
+            --glass-bg: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(254, 240, 138, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: var(--text-light);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            filter: brightness(0.85) contrast(1.05);
+            animation: fadeInBg 2s ease-in-out;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.4) 0%, rgba(30, 41, 59, 0.7) 100%);
+            z-index: -1;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Smooth Glass Card Styling & Animations */
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            
+            /* Entry Animations */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        main > .card:nth-of-type(1) { animation-delay: 0.3s; }
+        main > .card:nth-of-type(2) { animation-delay: 0.4s; }
+        main > .card:nth-of-type(3) { animation-delay: 0.5s; }
+
+        .card:hover {
+            border-color: var(--soft-yellow);
+            transform: translateY(-5px);
+            box-shadow: 0 25px 45px rgba(254, 240, 138, 0.12);
+        }
+
+        .tag {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--soft-yellow);
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h1, h2 {
+            font-family: 'Cormorant Garamond', serif;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.1rem;
+            font-style: italic;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--soft-yellow);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .poetic-desc {
+            color: var(--soft-blue);
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .story-text {
+            color: #e2e8f0;
+            font-size: 0.98rem;
+            line-height: 1.7;
+            font-style: italic;
+            border-left: 2px solid var(--soft-yellow);
+            padding-left: 15px;
+            margin-top: 10px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 20px;
+            background: rgba(254, 240, 138, 0.15);
+            color: var(--soft-yellow);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(254, 240, 138, 0.3);
+            letter-spacing: 1px;
+            align-self: flex-start;
+        }
+
+        .hobbies {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .hobbies li {
+            color: var(--soft-blue);
+            margin-bottom: 10px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .hobbies li:hover {
+            transform: translateX(5px);
+            color: #fff;
+        }
+
+        .quote-box {
+            margin-top: 15px;
+            padding: 12px 18px;
+            background: rgba(254, 240, 138, 0.08);
+            border-left: 3px solid var(--soft-yellow);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .quote-box p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.7rem;
+            font-style: italic;
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        /* Spotify Player Card */
+        .spotify-card {
+            padding: 25px;
+        }
+
+        .spotify-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--soft-yellow);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        iframe.spotify-embed {
+            border-radius: 12px;
+            width: 100%;
+            height: 152px;
+            border: none;
+        }
+
+        /* Form Styling */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(186, 230, 253, 0.3);
+            border-radius: 16px;
+            padding: 15px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        textarea:focus, input[type="text"]:focus {
+            border-color: var(--soft-yellow);
+            box-shadow: 0 0 12px rgba(254, 240, 138, 0.2);
+        }
+
+        .rating-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .rating-label {
+            color: var(--soft-blue);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(186, 230, 253, 0.3);
+            border-radius: 12px;
+            padding: 12px 15px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .submit-btn {
+            background: var(--soft-yellow);
+            color: var(--text-dark);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-btn:hover {
+            background: var(--warm-sun);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(253, 224, 71, 0.35);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--soft-blue);
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            padding: 20px 0;
+            opacity: 0.85;
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-image"></div>
+    <div class="bg-overlay"></div>
+
+    <main>
+        <!-- Top Section: 2 Columns Grid -->
+        <div class="grid-container">
+            <!-- Box 1: Poetic Welcome -->
+            <div class="card">
+                <div>
+                    <span class="tag">✦ YOUR PRINCE’S CORNER</span>
+                    <h1>“Enter softly, stranger or friend, for here time slows down and secrets find a home.”</h1>
+                    <p class="poetic-desc">A quiet sanctuary amidst the noise. Leave your burdens at the door and wander through this space in peace.</p>
+                </div>
+                <div class="badge">🌿 Safe · Kind · Quiet</div>
+            </div>
+
+            <!-- Box 2: Meaningful Short Story -->
+            <div class="card">
+                <div>
+                    <span class="tag">📖 A SHORT TALE</span>
+                    <h2>📜 The Unwritten Page</h2>
+                    <p class="story-text">
+                        “An old musician spent his entire life searching for the perfect melody. On his final evening by the river in Lombardy, he realized the beauty was never in the notes he played, but in the quiet pauses between them.”
+                    </p>
+                </div>
+                <div class="badge">🏛️ Northern Italy, 1983</div>
+            </div>
+        </div>
+
+        <!-- About Me Section -->
+        <div class="card">
+            <h2>👑 About Me — your prince</h2>
+            <p style="color: var(--soft-blue);">I’m <strong>Amir tchantchane</strong>, your boss.</p>
+            
+            <ul class="hobbies">
+                <li>💻 <strong>Hobbies:</strong> Programming · Music · Movies</li>
+                <li>🎧 <strong>Favorite Song:</strong> Mystery of Love — Sufjan Stevens</li>
+                <li>🎬 <strong>Favorite Movies/Shows:</strong> Always updating my watchlist</li>
+            </ul>
+
+            <div class="quote-box">
+                <p>“Is it better to speak or die?”</p>
+            </div>
+        </div>
+
+        <!-- Spotify Music Player Card -->
+        <div class="card spotify-card">
+            <div class="spotify-title">🎼 Favorite Soundtrack</div>
+            <iframe class="spotify-embed" src="https://open.spotify.com/embed/track/5GbVzc6Ex5LYlLJqzRQhuy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+
+        <!-- Visitor Interactive Section -->
+        <div class="card">
+            <h2>✉️ Your Turn Now!</h2>
+            <p class="poetic-desc">Share a secret, leave a thought, or simply drop your rating. Everything here stays quiet.</p>
+            
+            <form class="form-group" onsubmit="event.preventDefault(); alert('Thank you for sharing your thoughts!');">
+                <!-- Secret Box -->
+                <textarea placeholder="Write a secret or a message..."></textarea>
+                
+                <!-- Rating Section -->
+                <div class="rating-section">
+                    <label class="rating-label">⭐ How would you rate this corner? (1-10)</label>
+                    <input type="text" placeholder="e.g., 10/10 or your honest feedback...">
+                </div>
+
+                <button type="submit" class="submit-btn">Send Secret & Rating 🔒</button>
+            </form>
+        </div>
+
+        <footer>
+            Thanks for sharing a piece of your world with me! ✨
+        </footer>
+    </main>
+
+</body>
+</html>

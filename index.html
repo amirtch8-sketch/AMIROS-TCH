@@ -400,14 +400,15 @@
             <h2>✉️ Your Turn Now!</h2>
             <p class="poetic-desc">Share a secret, leave a thought, or simply drop your rating. Everything here stays quiet.</p>
             
-            <form class="form-group" onsubmit="event.preventDefault(); alert('Thank you for sharing your thoughts!');">
+            <!-- Connected to your Formspree endpoint: mjyvojjn -->
+            <form action="https://formspree.io/f/mjyvojjn" method="POST" class="form-group">
                 <!-- Secret Box -->
-                <textarea placeholder="Write a secret or a message..."></textarea>
+                <textarea name="message" placeholder="Write a secret or a message..." required></textarea>
                 
                 <!-- Rating Section -->
                 <div class="rating-section">
                     <label class="rating-label">⭐ How would you rate this corner? (1-10)</label>
-                    <input type="text" placeholder="e.g., 10/10 or your honest feedback...">
+                    <input type="text" name="rating" placeholder="e.g., 10/10 or your honest feedback..." required>
                 </div>
 
                 <button type="submit" class="submit-btn">Send Secret & Rating 🔒</button>

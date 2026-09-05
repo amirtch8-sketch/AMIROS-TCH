@@ -1,424 +1,457 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YOUR PRINCE'S CORNER — SOMEWHERE IN NORTHERN ITALY</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    
+    <title>AMIROS-TCH | Your Prince's Corner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --soft-yellow: #fef08a;
-            --warm-sun: #fde047;
-            --soft-blue: #bae6fd;
-            --sky-blue: #38bdf8;
-            --text-dark: #1e293b;
-            --text-light: #f8fafc;
-            --glass-bg: rgba(15, 23, 42, 0.65);
-            --glass-border: rgba(254, 240, 138, 0.25);
+            --bg-overlay: rgba(11, 15, 25, 0.85);
+            --card-bg: rgba(17, 24, 39, 0.75);
+            --border-color: rgba(255, 255, 255, 0.12);
+            --text-primary: #f3f4f6;
+            --text-secondary: #cbd5e1;
+            --accent-color: #d4af37;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: #0f172a;
-            color: var(--text-light);
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Tajawal', sans-serif;
+            color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: relative;
-        }
-
-        .bg-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2000&auto=format&fit=crop');
+            /* صورة الخلفية التي أرسلتها مع طبقة تعتيم */
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('téléchargement (5).jfif') no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            z-index: -2;
-            filter: brightness(0.85) contrast(1.05);
-            animation: fadeInBg 2s ease-in-out;
         }
 
-        .bg-overlay {
+        /* شاشة الترحيب والبوابة السرية */
+        #welcome-screen {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 15, 25, 0.95);
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #welcome-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .welcome-title {
+            font-family: 'Amiri', serif;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+        }
+
+        .welcome-desc {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            max-width: 550px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .enter-btn {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 12px 35px;
+            font-size: 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .enter-btn:hover {
+            background: var(--accent-color);
+            color: #0b0f19;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* الواجهة الرئيسية بعد الدخول */
+        .main-container {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.4) 0%, rgba(30, 41, 59, 0.7) 100%);
-            z-index: -1;
-        }
-
-        main {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-        }
-
-        @media (max-width: 768px) {
-            .grid-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Smooth Glass Card Styling & Animations */
-        .card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            
-            /* Entry Animations */
+            max-width: 950px;
+            padding: 40px 20px;
+            text-align: center;
             opacity: 0;
             transform: translateY(20px);
-            animation: fadeInUp 0.8s ease-out forwards;
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+            transition: var(--transition);
         }
 
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        main > .card:nth-of-type(1) { animation-delay: 0.3s; }
-        main > .card:nth-of-type(2) { animation-delay: 0.4s; }
-        main > .card:nth-of-type(3) { animation-delay: 0.5s; }
-
-        .card:hover {
-            border-color: var(--soft-yellow);
-            transform: translateY(-5px);
-            box-shadow: 0 25px 45px rgba(254, 240, 138, 0.12);
+        .main-container.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .tag {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 1.1rem;
-            color: var(--soft-yellow);
+        .corner-badge {
+            font-size: 0.85rem;
             letter-spacing: 2px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        h1, h2 {
-            font-family: 'Cormorant Garamond', serif;
-            color: #ffffff;
-            line-height: 1.3;
-        }
-
-        h1 {
-            font-size: 2.1rem;
-            font-style: italic;
-            margin-bottom: 15px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-
-        h2 {
-            font-size: 2rem;
-            color: var(--soft-yellow);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .poetic-desc {
-            color: var(--soft-blue);
-            font-size: 1rem;
-            line-height: 1.8;
-            font-weight: 300;
-        }
-
-        .story-text {
-            color: #e2e8f0;
-            font-size: 0.98rem;
-            line-height: 1.7;
-            font-style: italic;
-            border-left: 2px solid var(--soft-yellow);
-            padding-left: 15px;
-            margin-top: 10px;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 20px;
-            background: rgba(254, 240, 138, 0.15);
-            color: var(--soft-yellow);
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            border: 1px solid rgba(254, 240, 138, 0.3);
-            letter-spacing: 1px;
-            align-self: flex-start;
-        }
-
-        .hobbies {
-            list-style: none;
-            margin: 15px 0;
-        }
-
-        .hobbies li {
-            color: var(--soft-blue);
+            color: var(--accent-color);
+            text-transform: uppercase;
             margin-bottom: 10px;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: transform 0.2s ease;
+            display: block;
         }
 
-        .hobbies li:hover {
-            transform: translateX(5px);
+        .main-heading {
+            font-family: 'Amiri', serif;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
             color: #fff;
         }
 
-        .quote-box {
-            margin-top: 15px;
-            padding: 12px 18px;
-            background: rgba(254, 240, 138, 0.08);
-            border-left: 3px solid var(--soft-yellow);
-            border-radius: 0 12px 12px 0;
+        /* شبكة الأزرار التفاعلية */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 35px;
         }
 
-        .quote-box p {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.7rem;
-            font-style: italic;
-            color: #ffffff;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-        }
-
-        /* Spotify Player Card */
-        .spotify-card {
+        .nav-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             padding: 25px;
-        }
-
-        .spotify-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            color: var(--soft-yellow);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        iframe.spotify-embed {
-            border-radius: 12px;
-            width: 100%;
-            height: 152px;
-            border: none;
-        }
-
-        /* Form Styling */
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            margin-top: 15px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 120px;
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(186, 230, 253, 0.3);
             border-radius: 16px;
-            padding: 15px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 0.95rem;
-            resize: none;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(12px);
         }
 
-        textarea:focus, input[type="text"]:focus {
-            border-color: var(--soft-yellow);
-            box-shadow: 0 0 12px rgba(254, 240, 138, 0.2);
+        .nav-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+            background: rgba(17, 24, 39, 0.9);
         }
 
-        .rating-section {
+        .nav-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            color: var(--accent-color);
+        }
+
+        .nav-card p {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+        }
+
+        /* النوافذ المنبثقة (Modals) */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(15px);
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .rating-label {
-            color: var(--soft-blue);
-            font-size: 0.95rem;
-            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 6px;
+            z-index: 500;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 20px;
         }
 
-        input[type="text"] {
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #111827;
+            border: 1px solid var(--border-color);
             width: 100%;
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(186, 230, 253, 0.3);
+            max-width: 750px;
+            max-height: 85vh;
+            border-radius: 20px;
+            padding: 35px;
+            overflow-y: auto;
+            position: relative;
+            text-align: right;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px; left: 20px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--accent-color);
+        }
+
+        .modal-title {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: var(--accent-color);
+        }
+
+        /* تنسيق قسم "من أنا" الجديد بتصميم متطور وصورة */
+        .about-flex {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .about-img {
+            flex: 1;
+            min-width: 200px;
+            max-width: 250px;
+            height: 280px;
+            object-fit: cover;
             border-radius: 12px;
-            padding: 12px 15px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--accent-color);
+        }
+
+        .about-text {
+            flex: 2;
+            min-width: 280px;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        /* قوالب القصص وسجل الزوار */
+        .story-item img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .story-item p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .guestbook-form input, .guestbook-form textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 14px;
+            border-radius: 8px;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .guestbook-form textarea {
+            resize: vertical;
+            height: 110px;
         }
 
         .submit-btn {
-            background: var(--soft-yellow);
-            color: var(--text-dark);
+            background: var(--accent-color);
+            color: #0b0f19;
             border: none;
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 0.95rem;
+            padding: 12px 30px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            align-self: flex-start;
-            margin-top: 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            transition: var(--transition);
         }
 
         .submit-btn:hover {
-            background: var(--warm-sun);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(253, 224, 71, 0.35);
+            opacity: 0.9;
+            transform: scale(1.02);
         }
 
-        footer {
+        /* قسم ترحيب حسابات التواصل الاجتماعي في الأسفل */
+        .social-footer {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
             text-align: center;
-            color: var(--soft-blue);
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 1.1rem;
-            padding: 20px 0;
-            opacity: 0.85;
         }
 
-        /* Keyframe Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .social-footer p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
         }
 
-        @keyframes fadeInBg {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .social-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* تصميم مشغل سبوتيفاي في الأسفل */
+        .spotify-container {
+            margin-top: 25px;
+            border-radius: 12px;
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-image"></div>
-    <div class="bg-overlay"></div>
+    <!-- شاشة الترحيب والبوابة السرية -->
+    <div id="welcome-screen">
+        <div class="welcome-title">✦ YOUR PRINCE’S CORNER</div>
+        <p class="welcome-desc">“Enter softly, stranger or friend, for here time slows down and secrets find a home.”</p>
+        <button class="enter-btn" onclick="enterSite()">دخول الغرفة الهادئة</button>
+    </div>
 
-    <main>
-        <!-- Top Section: 2 Columns Grid -->
-        <div class="grid-container">
-            <!-- Box 1: Poetic Welcome -->
-            <div class="card">
-                <div>
-                    <span class="tag">✦ YOUR PRINCE’S CORNER</span>
-                    <h1>“Enter softly, stranger or friend, for here time slows down and secrets find a home.”</h1>
-                    <p class="poetic-desc">A quiet sanctuary amidst the noise. Leave your burdens at the door and wander through this space in peace.</p>
-                </div>
-                <div class="badge">🌿 Safe · Kind · Quiet</div>
+    <!-- الواجهة الرئيسية التفاعلية -->
+    <div class="main-container" id="main-content">
+        <span class="corner-badge">🌿 Safe · Kind · Quiet</span>
+        <h1 class="main-heading">عالم أمير الخاص</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 25px;">مساحة هادئة بعيدة عن صخب العالم، تفضل بفتح أحد الأبواب.</p>
+
+        <div class="nav-grid">
+            <div class="nav-card" onclick="openModal('aboutModal')">
+                <h3>👑 من أنا</h3>
+                <p>سيرة أعمق، رؤيتي، ذوقي الفني، وشغفي بالسينما والحياة.</p>
             </div>
+            <div class="nav-card" onclick="openModal('storiesModal')">
+                <h3>📜 صور وقصص</h3>
+                <p>لقطات مصورة تنبض بالحكايات والخلفيات المعبرة.</p>
+            </div>
+            <div class="nav-card" onclick="openModal('guestbookModal')">
+                <h3>✉️ سجل الزوار</h3>
+                <p>اترك بصمتك أو رسالتك الخاصة لتصلني مباشرة.</p>
+            </div>
+        </div>
 
-            <!-- Box 2: Meaningful Short Story -->
-            <div class="card">
-                <div>
-                    <span class="tag">📖 A SHORT TALE</span>
-                    <h2>📜 The Unwritten Page</h2>
-                    <p class="story-text">
-                        “An old musician spent his entire life searching for the perfect melody. On his final evening by the river in Lombardy, he realized the beauty was never in the notes he played, but in the quiet pauses between them.”
+        <!-- عبارة ترحيبية وروابط التواصل الاجتماعي المضافة في الأسفل -->
+        <div class="social-footer">
+            <p>يسعدني جداً أن تشاركني جزءاً من عالمك عبر حساباتي الشخصية:</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/amir.tch_/" target="_blank" class="social-btn">📸 Instagram</a>
+                <a href="https://open.spotify.com/user/316zwmmitpv42c2xmxm7ilwk5adq?si=6c632e282eb54d01" target="_blank" class="social-btn">🎧 Spotify Profile</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة منبثقة: من أنا (بتصميم معبر وصورة) -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('aboutModal')">&times;</button>
+            <h2 class="modal-title">عن الأمير</h2>
+            <div class="about-flex">
+                <!-- صورة الشخصية أو خلفية معبرة تعوض مكان صورتك -->
+                <img src="téléchargement (5).jfif" alt="Amir" class="about-img">
+                <div class="about-text">
+                    <p>
+                        أنا <strong>أمير تشانتشانه</strong>. أؤمن بأن التفاصيل الصغيرة، الأغاني الهادئة، والقصص المخبأة خلف النظرات هي ما يعطي الحياة معناه الحقيقي. أميل بطبعي إلى السكون والهدوء، وأجد في البرمجة والفن السينمائي نافذة أعبر بها عن عالمي الداخلي.
+                    </p>
+                    <p>
+                        هذا المكان وُجد ليكون ملجأً لكل باحث عن السكينة. كما قالوا يوماً:
+                    </p>
+                    <p style="font-style: italic; color: var(--accent-color);">
+                        “Is it better to speak or die?”
                     </p>
                 </div>
-                <div class="badge">🏛️ Northern Italy, 1983</div>
             </div>
         </div>
+    </div>
 
-        <!-- About Me Section -->
-        <div class="card">
-            <h2>👑 About Me — your prince</h2>
-            <p style="color: var(--soft-blue);">I’m <strong>Amir tchantchane</strong>, your boss.</p>
+    <!-- نافذة منبثقة: صور وقصص -->
+    <div class="modal" id="storiesModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('storiesModal')">&times;</button>
+            <h2 class="modal-title">قصص الصور</h2>
             
-            <ul class="hobbies">
-                <li>💻 <strong>Hobbies:</strong> Programming · Music · Movies</li>
-                <li>🎧 <strong>Favorite Song:</strong> Mystery of Love — Sufjan Stevens</li>
-                <li>🎬 <strong>Favorite Movies/Shows:</strong> Always updating my watchlist</li>
-            </ul>
-
-            <div class="quote-box">
-                <p>“Is it better to speak or die?”</p>
+            <div class="story-item">
+                <img src="téléchargement (5).jfif" alt="Story Image">
+                <p>“حيث يلتصق الضوء بظلال الشجر، وحيث يبطئ الزمن خطواته. أحياناً لا نحتاج لكثير من الكلمات، فصورة واحدة قادرة على رواية قصة عمر كامل.”</p>
             </div>
         </div>
+    </div>
 
-        <!-- Spotify Music Player Card -->
-        <div class="card spotify-card">
-            <div class="spotify-title">🎼 Favorite Soundtrack</div>
-            <iframe class="spotify-embed" src="https://open.spotify.com/embed/track/5GbVzc6Ex5LYlLJqzRQhuy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
-
-        <!-- Visitor Interactive Section -->
-        <div class="card">
-            <h2>✉️ Your Turn Now!</h2>
-            <p class="poetic-desc">Share a secret, leave a thought, or simply drop your rating. Everything here stays quiet.</p>
-            
-            <!-- Connected to your Formspree endpoint: mjyvojjn -->
-            <form action="https://formspree.io/f/mjyvojjn" method="POST" class="form-group">
-                <!-- Secret Box -->
-                <textarea name="message" placeholder="Write a secret or a message..." required></textarea>
-                
-                <!-- Rating Section -->
-                <div class="rating-section">
-                    <label class="rating-label">⭐ How would you rate this corner? (1-10)</label>
-                    <input type="text" name="rating" placeholder="e.g., 10/10 or your honest feedback..." required>
-                </div>
-
-                <button type="submit" class="submit-btn">Send Secret & Rating 🔒</button>
+    <!-- نافذة منبثقة: سجل الزوار -->
+    <div class="modal" id="guestbookModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('guestbookModal')">&times;</button>
+            <h2 class="modal-title">اترك أثراً</h2>
+            <form class="guestbook-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <input type="text" name="name" placeholder="اسمك أو اللقب..." required>
+                <textarea name="message" placeholder="اكتب رسالتك أو خاطرتك هنا..." required></textarea>
+                <button type="submit" class="submit-btn">إرسال بهدوء</button>
             </form>
+            
+            <!-- مشغل سبوتيفاي الرسمي المدمج لضمان عمل الموسيقى -->
+            <div class="spotify-container">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3Zftv2jtzeCSOEQJjWl7sl?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
         </div>
+    </div>
 
-        <footer>
-            Thanks for sharing a piece of your world with me! ✨
-        </footer>
-    </main>
+    <script>
+        // الانتقال من شاشة الترحيب
+        function enterSite() {
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const mainContent = document.getElementById('main-content');
+            
+            welcomeScreen.classList.add('hidden');
+            setTimeout(() => {
+                mainContent.classList.add('visible');
+            }, 300);
+        }
 
+        // فتح وإغلاق النوافذ المنبثقة
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+    </script>
 </body>
 </html>
